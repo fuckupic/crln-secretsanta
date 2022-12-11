@@ -12,6 +12,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/figtree": "^4.5.2",
+    "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.16",
     "@mui/styled-engine-sc": "^5.10.16",
     "@prisma/client": "^4.7.1",

@@ -1,17 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../lib/prisma'
 
-export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-  const userName = req.query.userName
-  const updateUser = await prisma.team.update({
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const post = await prisma.post.findUnique({
     where: {
-      name: name,
+      id: String(params?.id),
     },
-    data: {
-      isTaken: true,
+    include: {
+      author: {
+        select: { name: true },
+      },
     },
-  })
-}
+  });
+  return {
+    props: post,
+  };
+};
 
 // DELETE /api/post/:id
 async function handleDELETE(teamId, res) {

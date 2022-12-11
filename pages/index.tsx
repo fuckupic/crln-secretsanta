@@ -3,7 +3,6 @@ import {Stack, Box, Button, Typography} from '@mui/material'
 import Modal from '@mui/material/Modal';
 import useSwr from 'swr'
 
-import Teammate from '../components/Teammate'
 import UserList from '../components/UserList'
 import Countdowner from '../components/Countdowner'
 
