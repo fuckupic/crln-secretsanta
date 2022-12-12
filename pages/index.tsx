@@ -4,7 +4,7 @@ import prisma from '../lib/prisma'
 import Modal from '@mui/material/Modal'
 import useSwr from 'swr'
 
-import UserList from '../components/UserList.tsx'
+import UserList from '../components/UserList.js'
 import Countdowner from '../components/Countdowner'
 
 import React from 'react'

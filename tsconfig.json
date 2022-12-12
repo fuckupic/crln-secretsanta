@@ -19,7 +19,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/api/randomUser.js"
+    "pages/api/randomUser.js",
+    "components/UserList.js"
   ],
   "exclude": ["node_modules"]
 }
