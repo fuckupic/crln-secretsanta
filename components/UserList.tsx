@@ -1,8 +1,10 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import { spacing, Stack } from '@mui/system'
 import User from './User'
 import { Box, Grid, Button, Typography } from '@mui/material'
 import { Modal } from '@mui/material'
+import useSwr from 'swr'
+import Router from 'next/router'
 
 import Chip from '@mui/material/Chip'
 import Card from '@mui/material/Card'
@@ -19,14 +21,13 @@ import EditIcon from '@mui/icons-material/Edit'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ReplyIcon from '@mui/icons-material/Reply'
-import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import NumbersRoundedIcon from '@mui/icons-material/NumbersRounded'
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import SkipNextIcon from '@mui/icons-material/SkipNext'
 
 function UserList({ teamMates }) {
-
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -45,35 +46,48 @@ function UserList({ teamMates }) {
     p: 4,
   }
 
+  const [record, setRecord] = useState([''])
 
-function getRandomNumber (min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
+  const fetchSelectedRecord = () => {
+    return fetch('api/randomUser')
+      .then((response) => response.json())
+      .then((record) => {
+        setRecord(record)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
-const [name, setName] = useState('')
-var names = teamMates?.map((d) => d.name)
-var numberofnames = names?.length
+  const confirmUser = () => {
+    return fetch(`api/user/${record[0]?.id}`)
+      .then((response) => response.json())
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
-var randomNum = 0
+  const handleButtonClick = () => {
+    fetchSelectedRecord()
+    handleOpen()
+    console.log(record)
+  }
 
-async function handleClick() {
-  randomNum = getRandomNumber(0, numberofnames - 1)
-  console.log(randomNum)
-  console.log(names[randomNum])
-  handleOpen()
-
-  setName(names?.[randomNum])
-  console.log(name)
-  
-}
-
-  async function handleConfirm() {
-    await fetch(`/api/handleTeam/${names?.[randomNum]}`, {})
+  const handleConfirm = () => {
+    confirmUser()
+    handleClose()
+    Router.reload()
   }
 
   return (
-    <Stack display={'flex'} justifyContent={'center'} alignItems={'center'} flexDirection={'column'} gap={5}>
-<Modal
+    <Stack
+      display={'flex'}
+      justifyContent={'center'}
+      alignItems={'center'}
+      flexDirection={'column'}
+      gap={5}
+    >
+      <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -87,9 +101,10 @@ async function handleClick() {
             textAlign={'center'}
             mb={2}
           >
-         Vybrali jste si kolegu! <br />
-         <Typography variant="h5" fontWeight={'bold'}>{name}</Typography>
-            
+            Vybrali jste si kolegu! <br />
+            <Typography variant="h5" fontWeight={'bold'}>
+              {record[0]?.name}
+            </Typography>
           </Typography>
           <Stack
             direction={'row'}
@@ -102,8 +117,8 @@ async function handleClick() {
               aria-label=""
               variant="extended"
               fontWeight="bold"
-              sx={{border: '1px solid #000'}}
-              onClick={handleClick}
+              sx={{ border: '1px solid #000' }}
+              onClick={handleButtonClick}
             >
               ... Ale to jsem já
             </Fab>
@@ -111,8 +126,8 @@ async function handleClick() {
               color="primary"
               aria-label=""
               variant="extended"
-              onClick={handleClose}
-              sx={{border: '1px solid #000'}}
+              onClick={confirmUser}
+              sx={{ border: '1px solid #000' }}
             >
               <CheckRoundedIcon />
               Potvrdit
@@ -120,16 +135,14 @@ async function handleClick() {
           </Stack>
         </Stack>
       </Modal>
-    <Grid
-      container
-      rowSpacing={{ xs: 1, sm: 2, md: 3 }}
-      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-      maxWidth={'100rem'}
-      sx={{ alignItems: '', justifyContent: 'center', flex: '1'}}
-    >
-      {teamMates
-        ?.slice(0)
-        .map((user) => (
+      <Grid
+        container
+        rowSpacing={{ xs: 1, sm: 2, md: 3 }}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        maxWidth={'100rem'}
+        sx={{ alignItems: '', justifyContent: 'center', flex: '1' }}
+      >
+        {teamMates?.map((user) => (
           <Grid item xs={10} sm={5} md={3} key={user.id}>
             <User
               id={user.id}
@@ -140,12 +153,11 @@ async function handleClick() {
             />
           </Grid>
         ))}
-    </Grid>
-    <Button variant="contained" color="primary" onClick={handleClick}>
+      </Grid>
+      <Button variant="contained" color="primary" onClick={handleButtonClick}>
         Vybrat
       </Button>
     </Stack>
-
   )
 }
 

@@ -10,7 +10,7 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import Image from 'mui-image'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Modal } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -20,28 +20,8 @@ import Tooltip from '@mui/material/Tooltip'
 import Fab from '@mui/material/Fab'
 import { borderRadius } from '@mui/system'
 
-
-export default function User({
-  id,
-  name,
-  description,
-  photo,
-  isTaken
-}) {
+export default function User({ id, name, description, photo, isTaken }) {
   const router = useRouter()
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'error.dark',
-    border: '2px solid #000',
-    borderRadius: '16px',
-    boxShadow: 24,
-    color: 'error.contrastText',
-    p: 4,
-  }
 
   const theme = useTheme()
 
@@ -58,6 +38,10 @@ export default function User({
     router.reload(window.location.pathname)
   }
 
+  const myLoader = ({ src, width, quality }) => {
+    return `${photo}`
+  }
+
   return (
     <Box
       sx={{
@@ -71,52 +55,66 @@ export default function User({
       }}
     >
       <ToastContainer />
-      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
-      <Box>
-        <Box sx={{ flex: '1 0 auto' }}>
-          <Stack spacing={1}>
-            <Stack direction={'row'} spacing={1}>
-              <Stack
-                direction={'row'}
-                backgroundColor="primary.main"
-                justifyContent={'center'} alignItems={'center'} flexDirection={'column'}
-                sx={{
-                  borderRadius: '10px',
-                  px: 1,
-                  py: 0.2,
-                }}
-              >
-              {isTaken ? (<Typography variant="body2" color="black">ZABRÁNO</Typography>) : (<Typography variant="body2" color="initial"></Typography>)}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Box>
+          <Box sx={{ flex: '1 0 auto' }}>
+            <Stack spacing={1}>
+              <Stack direction={'row'} spacing={1}>
+                <Stack
+                  direction={'row'}
+                  backgroundColor="primary.main"
+                  justifyContent={'center'}
+                  alignItems={'center'}
+                  flexDirection={'column'}
+                  sx={{
+                    borderRadius: '10px',
+                    px: 1,
+                    py: 0.2,
+                  }}
+                >
+                  {isTaken ? (
+                    <Typography variant="body2" color="black">
+                      ZABRÁNO
+                    </Typography>
+                  ) : (
+                    <Typography variant="body2" color="initial"></Typography>
+                  )}
+                </Stack>
               </Stack>
+              <Typography
+                sx={{ fontWeight: 'medium', fontFamily: 'Roboto' }}
+                component="div"
+                variant="h5"
+              >
+                {name}
+              </Typography>
+              <Typography variant="body2">{description}</Typography>
             </Stack>
-            <Typography
-              sx={{ fontWeight: 'medium', fontFamily: 'Roboto' }}
-              component="div"
-              variant="h5"
-            >
-              {name}
-            </Typography>
-            <Typography variant="body2">{description}</Typography>
-          </Stack>
+          </Box>
+          <Box
+            padding={3}
+            sx={{
+              position: 'absolute',
+              right: '0',
+              bottom: '0',
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          ></Box>
         </Box>
-        <Box
-          padding={3}
-          sx={{
-            position: 'absolute',
-            right: '0',
-            bottom: '0',
-            display: 'flex',
-            flexDirection: 'row',
-          }}
-        >
-        </Box>
-      </Box>
         <Box mt={2}>
           <Image
             alt=""
+            loader={myLoader}
             src={photo}
-            fit="fit"
-            showLoading={true}
+            width={200}
+            height={200}
             sx={{ borderRadius: '10px', border: '2px solid rgba(0, 0, 0, 1)' }}
           />
         </Box>
