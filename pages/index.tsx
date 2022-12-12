@@ -56,14 +56,14 @@ export default function Home({ team }) {
             Twas the night before Christmas, at CRLN in Pilsen, Where Ondra,
             Markéta, Tadeáš and Štěpánka were busy as elves. With projects and
             tasks they worked away, Hoping to finish before the big day. But
-            despite their hard work and dedication, They couldn't help but feel
-            a bit of elation. For Christmas was a time for joy and cheer, And
-            spending time with loved ones near. So they took a break, and raised
-            a glass, Toasting to a successful year that's past. And as they
-            shared stories and laughed with glee, They knew that this was the
-            best Christmas to be. Here's to CRLN, and all that you do, Bringing
-            joy and happiness to me and to you. Merry Christmas, and a happy new
-            year, From your team at CRLN, oh so dear.
+            despite their hard work and dedication, They couldn&apos;t help but
+            feel a bit of elation. For Christmas was a time for joy and cheer,
+            And spending time with loved ones near. So they took a break, and
+            raised a glass, Toasting to a successful year that&apos;s past. And
+            as they shared stories and laughed with glee, They knew that this
+            was the best Christmas to be. Here&apos;s to CRLN, and all that you
+            do, Bringing joy and happiness to me and to you. Merry Christmas,
+            and a happy new year, From your team at CRLN, oh so dear.
           </Typography>
         </Stack>
         <UserList teamMates={team} />
