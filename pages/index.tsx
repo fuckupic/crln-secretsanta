@@ -52,11 +52,7 @@ export default function Home({ team }) {
             <Typography variant="body2">Setkání u vánoční větve: </Typography>
             <Countdowner />
           </Stack>
-          <Typography
-            variant="body2"
-            textAlign={'center'}
-            sx={{ color: 'charcoal' }}
-          >
+          <Typography variant="body2" textAlign={'center'}>
             Twas the night before Christmas, at CRLN in Pilsen, Where Ondra,
             Markéta, Tadeáš and Štěpánka were busy as elves. With projects and
             tasks they worked away, Hoping to finish before the big day. But
@@ -67,7 +63,7 @@ export default function Home({ team }) {
             shared stories and laughed with glee, They knew that this was the
             best Christmas to be. Here's to CRLN, and all that you do, Bringing
             joy and happiness to me and to you. Merry Christmas, and a happy new
-            year, From your team at CRLN, oh so dear.{' '}
+            year, From your team at CRLN, oh so dear.
           </Typography>
         </Stack>
         <UserList teamMates={team} />
